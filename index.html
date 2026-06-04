@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Societário DAGER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface2: #18181b;
+  --surface3: #1f1f24;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f0f2;
+  --text2: #9191a0;
+  --text3: #5a5a6a;
+  --accent: #c8a96e;
+  --accent2: #e8c98e;
+  --gold-dim: rgba(200,169,110,0.12);
+  --green: #2d9e6b;
+  --green-bg: rgba(45,158,107,0.12);
+  --amber: #d4842e;
+  --amber-bg: rgba(212,132,46,0.12);
+  --red: #d44444;
+  --red-bg: rgba(212,68,68,0.12);
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* HEADER */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-logo {
+  width: 34px;
+  height: 34px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  color: #0a0a0b;
+  letter-spacing: 0.5px;
+}
+.header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.2px;
+}
+.header-sub {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#db-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+}
+.status-dot.connected { background: var(--green); }
+.status-dot.error { background: var(--red); }
+
+/* AREA TABS */
+.area-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.area-tab {
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+}
+.area-tab:hover { color: var(--text); }
+.area-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* LAYOUT */
+.main {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+  height: calc(100vh - 113px);
+}
+
+/* SIDEBAR / FORM */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 24px;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.field-group {
+  margin-bottom: 14px;
+}
+.field-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+input, select, textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--text3);
+}
+select option { background: #1a1a1f; }
+textarea { resize: vertical; min-height: 120px; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* DOCUMENTOS CHECKLIST */
+.docs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  font-size: 12px;
+  color: var(--text2);
+}
+.doc-item:hover { border-color: var(--border2); }
+.doc-item.checked { border-color: var(--accent); color: var(--accent); }
+.doc-item input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* BUTTONS */
+.btn-primary {
+  width: 100%;
+  background: var(--accent);
+  color: #0a0a0b;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 0.2px;
+}
+.btn-primary:hover { background: var(--accent2); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-ghost {
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+
+.btn-danger {
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid rgba(212,68,68,0.2);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-danger:hover { background: rgba(212,68,68,0.2); }
+
+/* CONTENT */
+.content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* METRICS */
+.metrics-bar {
+  padding: 20px 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.metric-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.metric-value {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.metric-label {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+}
+.metric-card.total .metric-value { color: var(--accent); }
+.metric-card.andamento .metric-value { color: var(--amber); }
+.metric-card.pendente .metric-value { color: var(--red); }
+.metric-card.concluido .metric-value { color: var(--green); }
+
+/* TOOLBAR */
+.toolbar {
+  padding: 14px 28px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.search-wrap {
+  position: relative;
+  flex: 1;
+}
+.search-wrap svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+}
+.search-input {
+  padding-left: 34px;
+}
+.filter-select {
+  width: auto;
+  min-width: 140px;
+}
+
+/* TABLE */
+.table-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 28px 24px;
+  padding-top: 0;
+}
+.table-wrap::-webkit-scrollbar { width: 4px; }
+.table-wrap::-webkit-scrollbar-track { background: transparent; }
+.table-wrap::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 16px;
+}
+thead th {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+thead th:first-child { border-left: 1px solid var(--border); border-radius: 8px 0 0 0; }
+thead th:last-child { border-right: 1px solid var(--border); border-radius: 0 8px 0 0; }
+
+tbody tr {
+  transition: background 0.1s;
+}
+tbody tr:hover td { background: var(--surface2); }
+tbody td {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: 13px;
+  vertical-align: top;
+}
+tbody td:first-child { border-left: 1px solid var(--border); }
+tbody td:last-child { border-right: 1px solid var(--border); }
+tbody tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+.cell-main { font-weight: 500; color: var(--text); }
+.cell-sub { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 2px; }
+.obs-cell { max-width: 260px; color: var(--text2); line-height: 1.6; font-size: 12px; white-space: pre-wrap; }
+
+/* BADGES */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.badge.andamento { background: var(--amber-bg); color: var(--amber); }
+.badge.andamento::before { background: var(--amber); }
+.badge.pendente { background: var(--red-bg); color: var(--red); }
+.badge.pendente::before { background: var(--red); }
+.badge.concluido { background: var(--green-bg); color: var(--green); }
+.badge.concluido::before { background: var(--green); }
+
+/* AREA TAG */
+.area-tag {
+  font-size: 10px;
+  background: var(--gold-dim);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* ACTIONS */
+.actions-cell { display: flex; gap: 6px; white-space: nowrap; }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text3);
+}
+.empty-state svg { margin-bottom: 12px; opacity: 0.3; }
+.empty-state p { font-size: 13px; }
+
+/* LOADING */
+.loading-row td {
+  text-align: center;
+  color: var(--text3);
+  padding: 40px !important;
+  font-size: 13px;
+}
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* TOAST */
+.toast-wrap {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 999;
+}
+.toast {
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.2s ease;
+  max-width: 300px;
+}
+.toast.success { border-left: 3px solid var(--green); }
+.toast.error { border-left: 3px solid var(--red); }
+@keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 18px 0;
+}
+
+/* CONFIG MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 28px;
+  width: 480px;
+  max-width: 95vw;
+}
+.modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.modal p { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+
+/* FORM EDIT MODE */
+.edit-mode-banner {
+  display: none;
+  background: var(--gold-dim);
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--accent);
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-mode-banner.show { display: flex; }
+
+@media (max-width: 1100px) {
+  .main { grid-template-columns: 320px 1fr; }
+}
+@media (max-width: 800px) {
+  .main { grid-template-columns: 1fr; height: auto; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+  .metrics-bar { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">DAG</div>
+    <div>
+      <div class="header-title">Portal Societário</div>
+      <div class="header-sub">DAGER · Gestão Empresarial</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div id="db-status">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Conectando...</span>
+    </div>
+    <button class="btn-ghost" onclick="openConfig()" title="Configurar Supabase">⚙ Config</button>
+  </div>
+</header>
+
+<!-- AREA TABS -->
+<div class="area-bar">
+  <button class="area-tab active" onclick="setArea('DAGER HUB', this)">DAGER HUB</button>
+  <button class="area-tab" onclick="setArea('GRUPO DE EMPRESAS DAGER', this)">Grupo de Empresas</button>
+  <button class="area-tab" onclick="setArea('TODAS', this)">Todas as Áreas</button>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- SIDEBAR FORM -->
+  <aside class="sidebar">
+    <div class="edit-mode-banner" id="editBanner">
+      <span>✏ Editando processo</span>
+      <button class="btn-ghost" onclick="cancelarEdicao()" style="padding:4px 8px;font-size:11px;">Cancelar</button>
+    </div>
+
+    <div class="section-title">Novo Processo</div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Cliente</label>
+        <input id="cliente" placeholder="Nome do cliente">
+      </div>
+      <div class="field-group">
+        <label class="field-label">CNPJ</label>
+        <input id="cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Razão Social</label>
+      <input id="razao" placeholder="Razão social completa">
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Responsável</label>
+        <select id="responsavel">
+          <option>Ana Cecília</option>
+          <option>Henrique</option>
+          <option>Matheus</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Unidade</label>
+        <select id="unidade">
+          <option>Ubajara</option>
+          <option>São Benedito</option>
+          <option>Tianguá</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Órgão</label>
+        <select id="orgao">
+          <option>Receita Federal</option>
+          <option>JUCEC</option>
+          <option>SEFAZ</option>
+          <option>Prefeitura</option>
+          <option>Cartório</option>
+          <option>SEMACE</option>
+          <option>Corpo de Bombeiros</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Status</label>
+        <select id="status">
+          <option>Em andamento</option>
+          <option>Pendente</option>
+          <option>Concluído</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Tipo de Processo</label>
+        <input id="processo" placeholder="Ex: Abertura de empresa">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Prazo</label>
+        <input id="prazo" type="date">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Documentos</div>
+
+    <div class="docs-grid" id="docsGrid">
+      <label class="doc-item"><input type="checkbox" value="Contrato Social"> Contrato Social</label>
+      <label class="doc-item"><input type="checkbox" value="DBE"> DBE</label>
+      <label class="doc-item"><input type="checkbox" value="Viabilidade"> Viabilidade</label>
+      <label class="doc-item"><input type="checkbox" value="Procuração"> Procuração</label>
+      <label class="doc-item"><input type="checkbox" value="DARE"> DARE</label>
+      <label class="doc-item"><input type="checkbox" value="Alvará"> Alvará</label>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Histórico / Observações</div>
+
+    <div class="field-group">
+      <textarea id="obs" rows="6" placeholder="03/06/2026 — Recebida documentação.&#10;04/06/2026 — Aguardando assinatura.&#10;05/06/2026 — Protocolado na JUCEC."></textarea>
+    </div>
+
+    <button class="btn-primary" id="btnSalvar" onclick="salvar()">Salvar Processo</button>
+  </aside>
+
+  <!-- CONTENT PANEL -->
+  <div class="content">
+
+    <!-- METRICS -->
+    <div class="metrics-bar">
+      <div class="metric-card total">
+        <div class="metric-value" id="mTotal">0</div>
+        <div class="metric-label">Total</div>
+      </div>
+      <div class="metric-card andamento">
+        <div class="metric-value" id="mAndamento">0</div>
+        <div class="metric-label">Em Andamento</div>
+      </div>
+      <div class="metric-card pendente">
+        <div class="metric-value" id="mPendente">0</div>
+        <div class="metric-label">Pendentes</div>
+      </div>
+      <div class="metric-card concluido">
+        <div class="metric-value" id="mConcluido">0</div>
+        <div class="metric-label">Concluídos</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="search-wrap" style="flex:1">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input id="busca" class="search-input" placeholder="Pesquisar cliente, CNPJ, razão social..." oninput="renderTable()">
+      </div>
+      <select id="filtroStatus" class="filter-select" onchange="renderTable()">
+        <option value="">Todos os status</option>
+        <option>Em andamento</option>
+        <option>Pendente</option>
+        <option>Concluído</option>
+      </select>
+      <select id="filtroResp" class="filter-select" onchange="renderTable()">
+        <option value="">Todos responsáveis</option>
+        <option>Ana Cecília</option>
+        <option>Henrique</option>
+        <option>Matheus</option>
+      </select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente / Razão Social</th>
+            <th>Processo</th>
+            <th>Responsável</th>
+            <th>Órgão</th>
+            <th>Prazo</th>
+            <th>Status</th>
+            <th>Observações</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- CONFIG MODAL -->
+<div class="modal-overlay" id="configModal">
+  <div class="modal">
+    <h3>⚙ Configuração Supabase</h3>
+    <p>Insira as credenciais do seu projeto Supabase. Você encontra esses dados em <strong>Project Settings → API</strong> no painel do Supabase.</p>
+    <div class="field-group">
+      <label class="field-label">Supabase URL</label>
+      <input id="cfgUrl" placeholder="https://xxxxxxxxxxx.supabase.co">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Anon Key (public)</label>
+      <input id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeConfig()">Cancelar</button>
+      <button class="btn-primary" style="width:auto;padding:9px 20px" onclick="salvarConfig()">Salvar e Conectar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG ─────────────────────────────────────────────────────
+const CONFIG_KEY = 'dager_supabase_config';
+const TABLE_NAME = 'processos';
+
+let supabaseUrl = '';
+let supabaseKey = '';
+let client = null;
+let areaAtual = 'DAGER HUB';
+let editId = null;
+let dados = [];
+
+// ─── INIT ────────────────────────────────────────────────────────
+async function init() {
+  const saved = localStorage.getItem(CONFIG_KEY);
+  if (saved) {
+    try {
+      const cfg = JSON.parse(saved);
+      supabaseUrl = cfg.url;
+      supabaseKey = cfg.key;
+      await conectar();
+    } catch {
+      setStatus('error', 'Config inválida');
+    }
+  } else {
+    setStatus('error', 'Não configurado');
+    // Fallback para localStorage enquanto não configura
+    carregarLocal();
+  }
+
+  // Formatação CNPJ
+  document.getElementById('cnpj').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '').slice(0, 14);
+    if (v.length > 12) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+    else if (v.length > 8) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d+)$/, '$1.$2.$3/$4');
+    else if (v.length > 5) v = v.replace(/^(\d{2})(\d{3})(\d+)$/, '$1.$2.$3');
+    else if (v.length > 2) v = v.replace(/^(\d{2})(\d+)$/, '$1.$2');
+    this.value = v;
+  });
+
+  // Checklist estilo
+  document.querySelectorAll('#docsGrid input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.doc-item').classList.toggle('checked', this.checked);
+    });
+  });
+}
+
+// ─── SUPABASE ────────────────────────────────────────────────────
+async function conectar() {
+  setStatus('loading', 'Conectando...');
+  try {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    client = createClient(supabaseUrl, supabaseKey);
+    const { error } = await client.from(TABLE_NAME).select('count', { count: 'exact', head: true });
+    if (error) throw error;
+    setStatus('connected', 'Supabase conectado');
+    await carregarDados();
+  } catch (e) {
+    console.error(e);
+    setStatus('error', 'Erro de conexão');
+    toast('Erro ao conectar. Usando armazenamento local.', 'error');
+    carregarLocal();
+  }
+}
+
+function setStatus(type, text) {
+  const dot = document.getElementById('statusDot');
+  const label = document.getElementById('statusText');
+  dot.className = 'status-dot';
+  if (type === 'connected') dot.classList.add('connected');
+  if (type === 'error') dot.classList.add('error');
+  label.textContent = text;
+}
+
+async function carregarDados() {
+  if (!client) return carregarLocal();
+  try {
+    const { data, error } = await client.from(TABLE_NAME).select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    dados = data || [];
+    renderTable();
+  } catch (e) {
+    console.error(e);
+    carregarLocal();
+  }
+}
+
+// ─── FALLBACK LOCAL ───────────────────────────────────────────────
+function carregarLocal() {
+  dados = JSON.parse(localStorage.getItem('dager_processos_v2') || '[]');
+  renderTable();
+}
+
+function salvarLocal() {
+  localStorage.setItem('dager_processos_v2', JSON.stringify(dados));
+}
+
+// ─── CRUD ─────────────────────────────────────────────────────────
+function getFormData() {
+  const docs = Array.from(document.querySelectorAll('#docsGrid input:checked')).map(c => c.value);
+  return {
+    area: areaAtual,
+    cliente: document.getElementById('cliente').value.trim(),
+    cnpj: document.getElementById('cnpj').value.trim(),
+    razao: document.getElementById('razao').value.trim(),
+    responsavel: document.getElementById('responsavel').value,
+    unidade: document.getElementById('unidade').value,
+    orgao: document.getElementById('orgao').value,
+    processo: document.getElementById('processo').value.trim(),
+    prazo: document.getElementById('prazo').value,
+    status: document.getElementById('status').value,
+    documentos: docs.join(', '),
+    obs: document.getElementById('obs').value.trim()
+  };
+}
+
+async function salvar() {
+  const btn = document.getElementById('btnSalvar');
+  const form = getFormData();
+
+  if (!form.cliente && !form.razao) {
+    toast('Informe o cliente ou a razão social.', 'error');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Salvando...';
+
+  try {
+    if (client) {
+      if (editId !== null) {
+        const { error } = await client.from(TABLE_NAME).update(form).eq('id', editId);
+        if (error) throw error;
+      } else {
+        const { error } = await client.from(TABLE_NAME).insert([form]);
+        if (error) throw error;
+      }
+      await carregarDados();
+    } else {
+      // Fallback local
+      if (editId !== null) {
+        const idx = dados.findIndex(d => d.id === editId);
+        if (idx >= 0) dados[idx] = { ...dados[idx], ...form };
+      } else {
+        dados.unshift({ ...form, id: Date.now(), created_at: new Date().toISOString() });
+      }
+      salvarLocal();
+      renderTable();
+    }
+    toast(editId !== null ? 'Processo atualizado!' : 'Processo salvo!', 'success');
+    limparForm();
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao salvar: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Salvar Processo';
+  }
+}
+
+function editar(id) {
+  const r = dados.find(d => d.id === id);
+  if (!r) return;
+  editId = id;
+
+  areaAtual = r.area || 'DAGER HUB';
+  document.querySelectorAll('.area-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent.includes(areaAtual) || (areaAtual === 'DAGER HUB' && t.textContent === 'DAGER HUB'));
+  });
+
+  document.getElementById('cliente').value = r.cliente || '';
+  document.getElementById('cnpj').value = r.cnpj || '';
+  document.getElementById('razao').value = r.razao || '';
+  document.getElementById('responsavel').value = r.responsavel || 'Matheus';
+  document.getElementById('unidade').value = r.unidade || 'Ubajara';
+  document.getElementById('orgao').value = r.orgao || 'Receita Federal';
+  document.getElementById('processo').value = r.processo || '';
+  document.getElementById('prazo').value = r.prazo || '';
+  document.getElementById('status').value = r.status || 'Em andamento';
+  document.getElementById('obs').value = r.obs || '';
+
+  const docsAtivos = (r.documentos || '').split(', ').map(d => d.trim());
+  document.querySelectorAll('#docsGrid input[type=checkbox]').forEach(cb => {
+    const checked = docsAtivos.includes(cb.value);
+    cb.checked = checked;
+    cb.closest('.doc-item').classList.toggle('checked', checked);
+  });
+
+  document.getElementById('editBanner').classList.add('show');
+  document.querySelector('.sidebar').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function excluir(id) {
+  if (!confirm('Deseja excluir este processo?')) return;
+  try {
+    if (client) {
+      const { error } = await client.from(TABLE_NAME).delete().eq('id', id);
+      if (error) throw error;
+      await carregarDados();
+    } else {
+      dados = dados.filter(d => d.id !== id);
+      salvarLocal();
+      renderTable();
+    }
+    toast('Processo excluído.', 'success');
+  } catch (e) {
+    toast('Erro ao excluir: ' + e.message, 'error');
+  }
+}
+
+function cancelarEdicao() {
+  editId = null;
+  limparForm();
+}
+
+function limparForm() {
+  editId = null;
+  document.getElementById('editBanner').classList.remove('show');
+  ['cliente', 'cnpj', 'razao', 'processo', 'prazo', 'obs'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('status').value = 'Em andamento';
+  document.querySelectorAll('#docsGrid input[type=checkbox]').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.doc-item').classList.remove('checked');
+  });
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────
+function renderTable() {
+  const busca = document.getElementById('busca').value.toLowerCase();
+  const filtroStatus = document.getElementById('filtroStatus').value;
+  const filtroResp = document.getElementById('filtroResp').value;
+
+  let lista = dados.filter(r => {
+    if (areaAtual !== 'TODAS' && r.area !== areaAtual) return false;
+    if (filtroStatus && r.status !== filtroStatus) return false;
+    if (filtroResp && r.responsavel !== filtroResp) return false;
+    if (busca) {
+      const txt = (r.cliente + r.cnpj + r.razao + r.processo + r.obs + r.responsavel).toLowerCase();
+      if (!txt.includes(busca)) return false;
+    }
+    return true;
+  });
+
+  let andamento = 0, pendente = 0, concluido = 0;
+  lista.forEach(r => {
+    if (r.status === 'Em andamento') andamento++;
+    else if (r.status === 'Pendente') pendente++;
+    else if (r.status === 'Concluído') concluido++;
+  });
+
+  document.getElementById('mTotal').textContent = lista.length;
+  document.getElementById('mAndamento').textContent = andamento;
+  document.getElementById('mPendente').textContent = pendente;
+  document.getElementById('mConcluido').textContent = concluido;
+
+  const tb = document.getElementById('tb');
+  if (lista.length === 0) {
+    tb.innerHTML = `<tr class="loading-row"><td colspan="8">Nenhum processo encontrado.</td></tr>`;
+    return;
+  }
+
+  const badgeClass = { 'Em andamento': 'andamento', 'Pendente': 'pendente', 'Concluído': 'concluido' };
+
+  tb.innerHTML = lista.map(r => {
+    const bc = badgeClass[r.status] || 'andamento';
+    const prazo = r.prazo ? new Date(r.prazo + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+    const vencido = r.prazo && r.status !== 'Concluído' && new Date(r.prazo) < new Date();
+    const prazoHtml = vencido
+      ? `<span style="color:var(--red);font-weight:500">${prazo} ⚠</span>`
+      : `<span style="color:var(--text2)">${prazo}</span>`;
+
+    return `<tr>
+      <td>
+        <div class="cell-main">${esc(r.cliente || r.razao || '—')}</div>
+        <div class="cell-sub">${esc(r.cnpj || '')}${r.razao && r.cliente ? `<br>${esc(r.razao)}` : ''}</div>
+      </td>
+      <td>
+        <div>${esc(r.processo || '—')}</div>
+        <div style="margin-top:4px"><span class="area-tag">${esc(r.orgao || '')}</span></div>
+      </td>
+      <td style="color:var(--text2)">${esc(r.responsavel || '—')}<br><span style="font-size:11px;color:var(--text3)">${esc(r.unidade || '')}</span></td>
+      <td style="color:var(--text2);font-size:12px">${esc(r.orgao || '—')}</td>
+      <td>${prazoHtml}</td>
+      <td><span class="badge ${bc}">${esc(r.status)}</span></td>
+      <td class="obs-cell">${esc(r.obs || '—')}</td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn-ghost" onclick="editar(${JSON.stringify(r.id)})">Editar</button>
+          <button class="btn-danger" onclick="excluir(${JSON.stringify(r.id)})">Excluir</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ─── AREA ─────────────────────────────────────────────────────────
+function setArea(area, el) {
+  areaAtual = area;
+  document.querySelectorAll('.area-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderTable();
+}
+
+// ─── CONFIG MODAL ─────────────────────────────────────────────────
+function openConfig() {
+  const saved = localStorage.getItem(CONFIG_KEY);
+  if (saved) {
+    try {
+      const cfg = JSON.parse(saved);
+      document.getElementById('cfgUrl').value = cfg.url || '';
+      document.getElementById('cfgKey').value = cfg.key || '';
+    } catch {}
+  }
+  document.getElementById('configModal').classList.add('open');
+}
+function closeConfig() {
+  document.getElementById('configModal').classList.remove('open');
+}
+async function salvarConfig() {
+  const url = document.getElementById('cfgUrl').value.trim();
+  const key = document.getElementById('cfgKey').value.trim();
+  if (!url || !key) { toast('Preencha URL e Key.', 'error'); return; }
+  supabaseUrl = url;
+  supabaseKey = key;
+  localStorage.setItem(CONFIG_KEY, JSON.stringify({ url, key }));
+  closeConfig();
+  await conectar();
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span style="font-size:15px">${type === 'success' ? '✓' : '✕'}</span> ${msg}`;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+// ─── KEYBOARD SHORTCUT ───────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') salvar();
+  if (e.key === 'Escape') { closeConfig(); cancelarEdicao(); }
+});
+
+init();
+</script>
+</body>
+</html>

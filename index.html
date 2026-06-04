@@ -20,15 +20,36 @@
   --text3: #5a5a6a;
   --accent: #c8a96e;
   --accent2: #e8c98e;
-  --gold-dim: rgba(200,169,110,0.12);
+  --gold-dim: rgba(200,169,110,0.15);
   --green: #2d9e6b;
   --green-bg: rgba(45,158,107,0.12);
-  --amber: #d4842e;
-  --amber-bg: rgba(212,132,46,0.12);
+  --amber: #b86e10;
+  --amber-bg: rgba(184,110,16,0.12);
   --red: #d44444;
   --red-bg: rgba(212,68,68,0.12);
   --radius: 10px;
   --radius-sm: 6px;
+}
+
+[data-theme="light"] {
+  --bg: #f4f4f0;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --surface3: #e8e7e0;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --text: #1a1a1a;
+  --text2: #555550;
+  --text3: #999990;
+  --accent: #a07c3a;
+  --accent2: #c49a50;
+  --gold-dim: rgba(160,124,58,0.1);
+  --green: #1f7a52;
+  --green-bg: rgba(31,122,82,0.1);
+  --amber: #a05c10;
+  --amber-bg: rgba(160,92,16,0.1);
+  --red: #b83030;
+  --red-bg: rgba(184,48,48,0.1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -264,7 +285,21 @@ textarea { resize: vertical; min-height: 120px; }
 }
 .btn-ghost:hover { border-color: var(--border2); color: var(--text); }
 
-.btn-danger {
+.btn-theme {
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.btn-theme:hover { color: var(--text); border-color: var(--border2); }
+
+
   background: var(--red-bg);
   color: var(--red);
   border: 1px solid rgba(212,68,68,0.2);
@@ -565,6 +600,7 @@ tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
       <span class="status-dot" id="statusDot"></span>
       <span id="statusText">Conectando...</span>
     </div>
+    <button class="btn-theme" id="btnTema" onclick="alternarTema()" title="Alternar tema">🌙</button>
     <button class="btn-ghost" onclick="openConfig()" title="Configurar Supabase">⚙ Config</button>
   </div>
 </header>
@@ -1115,12 +1151,30 @@ function toast(msg, type = 'success') {
   setTimeout(() => el.remove(), 3500);
 }
 
+
+// ─── TEMA ───────────────────────────────────────────────────
+function alternarTema() {
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  document.getElementById('btnTema').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('dager_tema', isLight ? 'dark' : 'light');
+}
+
+function carregarTema() {
+  const t = localStorage.getItem('dager_tema') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  const btn = document.getElementById('btnTema');
+  if (btn) btn.textContent = t === 'light' ? '☀️' : '🌙';
+}
+
 // ─── KEYBOARD SHORTCUT ───────────────────────────────────────────
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') salvar();
   if (e.key === 'Escape') { closeConfig(); cancelarEdicao(); }
 });
 
+carregarTema();
 init();
 </script>
 </body>

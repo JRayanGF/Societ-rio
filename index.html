@@ -601,7 +601,6 @@ tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
       <span id="statusText">Conectando...</span>
     </div>
     <button class="btn-theme" id="btnTema" onclick="alternarTema()" title="Alternar tema">🌙</button>
-    <button class="btn-ghost" onclick="openConfig()" title="Configurar Supabase">⚙ Config</button>
   </div>
 </header>
 
@@ -810,8 +809,8 @@ tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
 const CONFIG_KEY = 'dager_supabase_config';
 const TABLE_NAME = 'processos';
 
-let supabaseUrl = '';
-let supabaseKey = '';
+let supabaseUrl = 'https://mhbdtibhqcphgdltcogn.supabase.co';
+let supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oYmR0aWJocWNwaGdkbHRjb2duIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTcxNjAsImV4cCI6MjA5NjA3MzE2MH0.9-drMGaIKpJHFv65lacvxTkMBBBX2CMmGkccWfhFuF4';
 let client = null;
 let areaAtual = 'DAGER HUB';
 let editId = null;
@@ -819,21 +818,8 @@ let dados = [];
 
 // ─── INIT ────────────────────────────────────────────────────────
 async function init() {
-  const saved = localStorage.getItem(CONFIG_KEY);
-  if (saved) {
-    try {
-      const cfg = JSON.parse(saved);
-      supabaseUrl = cfg.url;
-      supabaseKey = cfg.key;
-      await conectar();
-    } catch {
-      setStatus('error', 'Config inválida');
-    }
-  } else {
-    setStatus('error', 'Não configurado');
-    // Fallback para localStorage enquanto não configura
-    carregarLocal();
-  }
+  // Conectar automaticamente com credenciais fixas
+  await conectar();
 
   // Formatação CNPJ
   document.getElementById('cnpj').addEventListener('input', function() {
